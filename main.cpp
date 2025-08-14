@@ -107,6 +107,27 @@ int main(int argc, char* argv[]) {
             break;
         }
 
+        std::stringstream ss_for_command(line);
+        std::string first_word_cmd;
+        ss_for_command >> first_word_cmd;
+
+        if (first_word_cmd == "SET_LEVEL") {
+            std::string newLevelStr;
+            ss_for_command >> newLevelStr;
+            auto newLevelOpt = parseLogLevel(newLevelStr);
+            if (newLevelOpt) {
+                Logger::setLogLevel(*newLevelOpt);
+                std::cout << "Main: LEVEL CHANGED TO ->  " << newLevelStr << std::endl;
+            } else {
+                std::cerr << "Error: wrong level for SET_LEVEL command. Use LOW, MEDIUM, или HIGH." << std::endl;
+            }
+            continue; 
+        }
+
+
+
+
+
         std::stringstream ss(line);
         std::string first_word;
         ss >> first_word;
